@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace bank
 {
     class bank_account
@@ -45,9 +44,12 @@ namespace bank
             amount = 0;
             Console.WriteLine("Операция по снятию всех денег успешно проведена");
         }
-        public void transfer()
+        public void transfer(float amount, bool t)
         {
-
+            if (t == false)
+                this.amount -= amount;
+            else if (t == true)
+                this.amount += amount;
         }
     }
 }

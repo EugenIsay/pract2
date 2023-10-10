@@ -5,24 +5,27 @@ class program
     {
         ConsoleKeyInfo key;
         int u_id;
+        int r_id;
+        float value;
         int id;
         string full_name;
         float amount;
-        //bank_account user = new bank_account();
-        //user.open(1, "isay", 500);
         bank_account[] users = new bank_account[5];
         for (int i = 0; i < users.Length; i++)
         {
+            
             users[i] = new bank_account();
             users[i].open(1 + i, $"isay {1 + i}", 500 * (i + 1));
+
         }
         Console.WriteLine("Используйте английскую раскладку при работе");
-        Console.WriteLine("Введите ваш индификатор");
-        u_id = Convert.ToInt32(Console.ReadLine()) - 1;
+        start:
+            Console.WriteLine("Введите ваш индификатор");
+            u_id = Convert.ToInt32(Console.ReadLine());
         while (true)
         {
             Console.WriteLine("Выберите действие которое хотите выполнить");
-            Console.WriteLine("P - пополнить, S - показать информацию, W - снять деньги, T - перевести");
+            Console.WriteLine("P - пополнить, S - показать информацию, W - снять деньги, A - снять все деньги, T - перевести, E - выйти");
             key = Console.ReadKey(true);
             switch (key.Key.ToString())
             {
@@ -38,22 +41,22 @@ class program
                     break;
                 case "W":
                     Console.WriteLine("Сколько вы хотите снять?");
-                    Console.WriteLine("A - снять всё, W - снять определённое количество");
-                    key = Console.ReadKey(true);
-                    if (key.Key.ToString() == "A")
-                    {
-                        users[u_id].all();
-                    }
-                    else
-                    {
-                        users[u_id].withdraw(Convert.ToInt32(Console.ReadLine()));
-                    }
+                    users[u_id].withdraw(Convert.ToInt32(Console.ReadLine()));
+                    break;
+                case "A":
+                    users[u_id].all();
                     break;
                 case "T":
                     Console.WriteLine("Сколько вы хотите перевести?");
-                    users[u_id].transfer();
+                    value = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("Кому вы хотите перевести? (введите индификатор)");
+                    r_id = Convert.ToInt32(Console.ReadLine());
+                    users[u_id].transfer(value, false);
+                    users[r_id].transfer(value, true);
                     break;
-
+                case "E":
+                Console.Clear();
+                    goto start;
             }
 
         }
