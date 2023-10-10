@@ -46,6 +46,7 @@ namespace bank
         }
         public void transfer(float amount, bool t)
         {
+
             if (t == false)
                 this.amount -= amount;
             else if (t == true)
